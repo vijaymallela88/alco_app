@@ -1,0 +1,25 @@
+<%= form_with(model: cart, local: true) do |form| %>
+  <% if cart.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cart.errors.count, "error") %> prohibited this cart from being saved:</h2>
+
+      <ul>
+      <% cart.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :product %>
+    <%= form.select :product_id, options_for_select(@products), {:include_blank => 'Select'},  :required => true,class: "form-control" %>
+  </div>
+
+  <%= form.hidden_field :customer_id, :value => current_user.id%> 
+  <%= form.hidden_field :status, :value => 1%> 
+
+  <div class="actions">
+    <%= form.submit 'Save', class: 'btn btn-primary' %>
+  </div>
+<% end %>

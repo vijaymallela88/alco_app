@@ -1,0 +1,28 @@
+<%= link_to 'Create Store', new_store_path %><br>
+<%= link_to 'Products', products_path %><br>
+<%if @stores.present?%>
+<h1>Stores</h1>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Store Name</th>
+      <th>Address</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stores.each do |store| %>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.address %></td>
+        <td><%= link_to 'Products', products_path(:store_id => store.id) %></td>
+        <td><%= link_to 'Edit', edit_store_path(store) %></td>
+        <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%else%>
+<%#= link_to 'Create New store', new_deal_path %><br>
+ <h1>No Stores Available</h1>
+<%end%>

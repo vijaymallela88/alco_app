@@ -1,0 +1,21 @@
+<%= link_to 'Place order', new_cart_path %>
+<h1>Orders</h1>
+<%if @carts.present?%>
+<%= form_with url: "/carts/update", method: :patch do |form| %>
+  
+  
+  <% @carts.each_with_index do |cart, index| %>
+    <tr>
+      <td><%= check_box_tag "cart_ids[]", cart.id%></td>
+      <td><%= cart.product.product_name %></td>
+      <td><%= cart.customer_id %></td>
+      <td><%= link_to 'Remove', cart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr><br>
+  <% end %>
+
+  <div class="actions">
+    <%= submit_tag 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<%end%>
+<%= link_to 'Back to products', products_path %>
