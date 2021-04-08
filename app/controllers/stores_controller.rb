@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
+  before_action :update_user_type
   def index
     @stores = Store.all
-    User.first.update(:user_type => "admin")
     if current_user.user_type != "admin"
     	redirect_to products_path
     end
@@ -44,5 +44,13 @@ class StoresController < ApplicationController
   private
   def store_params
   	params.require(:store).permit!
+  end
+
+  def update_user_type
+    return if User.find_by(:user_type => "admin")
+    total_count = User.sum(:sign_in_count)
+    if total_count == current_user.sign_in_count
+      current_user.update(:user_type => "admin")
+    end
   end
 end
